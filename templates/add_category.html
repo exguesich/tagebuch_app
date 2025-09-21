@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kategorie hinzufügen</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive; background-color: #ffcccb; margin: 0; padding: 10px; text-align: center; min-height: 100vh; display: flex; justify-content: center; align-items: center; }
+        h1 { color: #ff69b4; font-weight: bold; font-size: 32px; text-shadow: 2px 2px 6px #fff; margin: 5px 0 20px; }
+        form { background: linear-gradient(135deg, #fff5f5, #ffeef2); padding: 30px; border: 5px solid #ff69b4; border-radius: 25px; display: inline-block; text-align: left; max-width: 450px; }
+        label { display: block; margin: 15px 0 5px; font-weight: bold; color: #ff69b4; font-size: 18px; }
+        input, textarea { display: block; margin: 10px 0; padding: 15px; width: 350px; border: 3px solid #ff69b4; border-radius: 15px; font-weight: bold; font-size: 16px; color: #ff69b4; background-color: #fff0f5; }
+        input[type="submit"] { background: linear-gradient(135deg, #ff69b4, #ff85a1); color: white; border: none; padding: 15px 30px; font-weight: bold; font-size: 18px; border-radius: 15px; cursor: pointer; }
+        input[type="submit"]:hover { background: linear-gradient(135deg, #ff1493, #ff4d88); }
+        .back-arrow { position: fixed; top: 5px; left: 20px; color: #ff69b4; font-size: 24px; text-decoration: none; font-weight: bold; }
+        .back-arrow:hover { color: #ff1493; }
+    </style>
+</head>
+<body>
+    <a href="javascript:history.back()" class="back-arrow">&larr; Zurück</a>
+    <h1>Kategorie hinzufügen</h1>
+    <form method="POST">
+        <label for="name">Name:</label> <input type="text" id="name" name="name" required><br>
+        <label for="description">Beschreibung:</label> <textarea id="description" name="description" required></textarea><br>
+        <input type="submit" value="Hinzufügen">
+    </form>
+    <a href="{{ url_for('create_entry') }}" style="color: #ff69b4; font-weight: bold; font-size: 16px; text-decoration: none; margin-top: 20px; display: inline-block;">Zurück</a>
+</body>
+</html>
