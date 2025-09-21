@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Wähle eine Aktion</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive;
+            background: linear-gradient(135deg, #ffe6f0, #ffecf5);
+            margin: 0;
+            padding: 10px;
+            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        h1 {
+            color: #ff69b4;
+            font-weight: bold;
+            font-size: 42px;
+            text-shadow: 2px 2px 10px rgba(255, 105, 180, 0.8);
+            margin: 5px 0 20px;
+            padding: 10px 20px;
+            background: rgba(255, 240, 245, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(255, 105, 180, 0.3);
+            width: 100%;
+            max-width: 500px;
+        }
+        .options-container {
+            background: linear-gradient(135deg, #fff5f5, #ffeef2);
+            padding: 40px;
+            border: 6px solid #ff69b4;
+            border-radius: 30px;
+            max-width: 500px;
+            box-shadow: 0 10px 25px rgba(255, 105, 180, 0.5);
+            animation: float 4s ease-in-out infinite; /* Leichte Animation für Spaß */
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .option-button {
+            background: linear-gradient(135deg, #ff69b4, #ff85a1);
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            font-weight: bold;
+            font-size: 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            margin: 20px;
+            text-decoration: none;
+            display: block;
+            transition: transform 0.3s, background 0.3s; /* Sanfte Übergänge */
+        }
+        .option-button:hover {
+            background: linear-gradient(135deg, #ff1493, #ff4d88);
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body>
+    <h1>Wähle eine Aktion</h1>
+    <div class="options-container">
+        <a href="{{ url_for('view_entries') }}" class="option-button">Alle Einträge anzeigen</a>
+        <a href="{{ url_for('create_entry') }}" class="option-button">Eintrag erstellen</a>
+    </div>
+</body>
+</html>
