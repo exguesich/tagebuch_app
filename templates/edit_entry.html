@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Eintrag bearbeiten</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive;
+            background: linear-gradient(135deg, #ffe6f0, #ffecf5);
+            margin: 0;
+            padding: 10px;
+            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+        }
+        h1 {
+            color: #ff69b4;
+            font-weight: bold;
+            font-size: 42px;
+            text-shadow: 2px 2px 10px rgba(255, 105, 180, 0.8);
+            margin: 5px 0 20px;
+            padding: 10px 20px;
+            background: rgba(255, 240, 245, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(255, 105, 180, 0.3);
+            width: 100%;
+            max-width: 600px;
+        }
+        .field-group {
+            margin: 15px 0;
+            padding: 5px;
+            text-align: left;
+            width: 100%;
+            max-width: 400px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #ff69b4;
+            font-size: 18px;
+            text-shadow: 1px 1px 3px rgba(255, 105, 180, 0.3);
+        }
+        input, textarea, select {
+            width: 350px;
+            padding: 12px;
+            border: 3px solid #ff69b4;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 16px;
+            color: #ff69b4;
+            background: #fffaf9;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 0 auto 8px;
+        }
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        input:focus, textarea:focus, select:focus {
+            border-color: #ff1493;
+            box-shadow: 0 0 15px rgba(255, 20, 147, 0.5);
+            transform: scale(1.02);
+            outline: none;
+        }
+        input[type="submit"] {
+            background: linear-gradient(135deg, #ff69b4, #ff85a1);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-weight: bold;
+            font-size: 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            margin: 10px auto;
+            display: block;
+            width: fit-content;
+            box-shadow: 0 3px 10px rgba(255, 105, 180, 0.4);
+        }
+        input[type="submit"]:hover {
+            background: linear-gradient(135deg, #ff1493, #ff4d88);
+            transform: translateY(-2px);
+        }
+        .back-arrow {
+            position: fixed;
+            top: 5px;
+            left: 20px;
+            color: #ff69b4;
+            font-size: 24px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .back-arrow:hover {
+            color: #ff1493;
+        }
+        .category-link {
+            color: #ff69b4;
+            font-weight: bold;
+            font-size: 16px;
+            text-decoration: none;
+            margin-top: 10px;
+            display: block;
+        }
+        .category-link:hover {
+            color: #ff1493;
+            text-decoration: underline;
+        }
+        .error {
+            color: #ff1493;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <a href="javascript:history.back()" class="back-arrow">&larr; Zurück</a>
+    <h1>Eintrag bearbeiten</h1>
+    <form method="POST" enctype="multipart/form-data">
+        <div class="field-group">
+            <label for="title">Titel:</label>
+            <input type="text" id="title" name="title" value="{{ entry.title }}" required>
+        </div>
+        <div class="field-group">
+            <label for="content">Inhalt:</label>
+            <textarea id="content" name="content" required>{{ entry.content }}</textarea>
+        </div>
+        <div class="field-group">
+            <label for="mood">Stimmung:</label>
+            <input type="text" id="mood" name="mood" value="{{ entry.mood or '' }}">
+        </div>
+        <div class="field-group">
+            <label for="date">Datum:</label>
+            <input type="date" id="date" name="date" value="{{ entry.date.strftime('%Y-%m-%d') }}" required>
+        </div>
+        <div class="field-group">
+            <label for="category">Kategorie:</label>
+            <select id="category" name="category" required>
+                {% for cat in categories %}
+                    <option value="{{ cat.id }}" {% if cat.id == entry.category_id %}selected{% endif %}>{{ cat.name }}</option>
+                {% endfor %}
+            </select>
+            <a href="{{ url_for('add_category') }}" class="category-link">Kategorie hinzufügen</a>
+        </div>
+        <div class="field-group">
+            <label for="image">Bild:</label>
+            <input type="file" id="image" name="image"> (Aktuell: {{ entry.image_path or 'Kein Bild' }})
+        </div>
+        <input type="submit" value="Speichern">
+        {% if error %}
+            <div class="error">{{ error }}</div>
+        {% endif %}
+    </form>
+</body>
+</html>
