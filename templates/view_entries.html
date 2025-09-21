@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Alle Einträge</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive;
+            background: linear-gradient(135deg, #ffe6f0, #ffecf5);
+            margin: 0;
+            padding: 10px;
+            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+        }
+        h1 {
+            color: #ff69b4;
+            font-weight: bold;
+            font-size: 42px;
+            text-shadow: 2px 2px 10px rgba(255, 105, 180, 0.8);
+            margin: 5px 0 20px;
+            padding: 10px 20px;
+            background: rgba(255, 240, 245, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(255, 105, 180, 0.3);
+            width: 100%;
+            max-width: 800px;
+        }
+        .entries-container {
+            padding: 20px;
+            width: 100%;
+            max-width: 900px;
+            background: none;
+        }
+        .entry-item {
+            background: rgba(255, 245, 245, 0.8);
+            margin: 30px 0;
+            padding: 20px;
+            border-left: 5px solid #ff69b4;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #ff69b4;
+            text-align: left;
+            position: relative;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.2);
+        }
+        .entry-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.4);
+        }
+        .entry-actions {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            gap: 10px;
+        }
+        .entry-actions a, .entry-actions form {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 90px;
+            padding: 8px 0;
+            color: #ff1493;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            border-radius: 10px;
+            background: #ffebee;
+            transition: background 0.3s, transform 0.3s;
+        }
+        .entry-actions a:hover, .entry-actions form:hover {
+            background: #ffccd5;
+            transform: scale(1.05);
+        }
+        .entry-actions form {
+            margin: 0;
+            padding: 0;
+        }
+        .entry-actions button {
+            background: none;
+            border: none;
+            color: #ff1493;
+            font-weight: bold;
+            cursor: pointer;
+            width: 90px;
+            padding: 8px 0;
+        }
+        .entry-actions button:hover {
+            background: #ffccd5;
+            transform: scale(1.05);
+        }
+        .create-button {
+            background: linear-gradient(135deg, #ff69b4, #ff85a1);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-weight: bold;
+            font-size: 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
+            text-decoration: none;
+            display: inline-block;
+        }
+        .create-button:hover {
+            background: linear-gradient(135deg, #ff1493, #ff4d88);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <h1>Alle Einträge</h1>
+    <div class="entries-container">
+        {% for entry in entries %}
+            <div class="entry-item">
+                <strong>{{ entry.title }}</strong> <span style="font-weight: normal;">({{ entry.date }})</span><br>
+                Inhalt: {{ entry.content | truncate(50, True) }}<br>
+                Stimmung: {{ entry.mood or 'Keine' }}<br>
+                Kategorie: {{ entry.category.name if entry.category else 'Keine' }}<br>
+                <div class="entry-actions">
+                    <a href="{{ url_for('edit_entry', id=entry.id) }}">Bearbeiten</a>
+                    <form method="POST" action="{{ url_for('delete_entry', id=entry.id) }}">
+                        <button type="submit">Löschen</button>
+                    </form>
+                </div>
+            </div>
+        {% endfor %}
+        <a href="{{ url_for('create_entry') }}" class="create-button">Erstelle nochmals einen Eintrag, Maus</a>
+    </div>
+</body>
+</html>
